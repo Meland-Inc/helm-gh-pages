@@ -1,6 +1,6 @@
-name: 'Helm Publisher'
-description: 'A GitHub Action for publishing Helm charts with Github Pages'
-author: 'Stefan Prodan'
+name: 'push charts'
+description: 'push charts.tgz to github pages'
+author: 'flyingpig-zzy'
 branding:
   icon: 'command'
   color: 'blue'
