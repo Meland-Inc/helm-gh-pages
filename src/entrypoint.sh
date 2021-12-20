@@ -31,9 +31,8 @@ COMMIT_EMAIL=${11}
 APP_VERSION=${12}
 CHART_VERSION=${13}
 INDEX_DIR=${14}
-
 CHARTS=()
-CHARTS_TMP_DIR=$(mktemp -d)
+CHARTS_TMP_DIR=./.chartsp
 REPO_ROOT=$(git rev-parse --show-toplevel)
 REPO_URL=""
 
@@ -86,13 +85,13 @@ main() {
       INDEX_DIR=${TARGET_DIR}
   fi
 
-  locate
+  # locate
   download
-  dependencies
+  # dependencies
   if [[ "$LINTING" != "off" ]]; then
-    lint
+    # lint
   fi
-  package
+  # package
   upload
 }
 
