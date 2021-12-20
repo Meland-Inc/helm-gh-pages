@@ -1,4 +1,4 @@
-# Helm Publisher
+# Helm Chart.tgz Publisher
 # Based upon [Helm Publisher](https://github.com/marketplace/actions/helm-publisher)
 
 A GitHub Action for publishing Helm charts with Github Pages.
