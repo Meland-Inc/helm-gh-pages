@@ -31,9 +31,9 @@ COMMIT_EMAIL=${11}
 APP_VERSION=${12}
 CHART_VERSION=${13}
 INDEX_DIR=${14}
-
 CHARTS=()
-CHARTS_TMP_DIR=$(mktemp -d)
+CHARTS_TMP_DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )/.chartsp"
+
 REPO_ROOT=$(git rev-parse --show-toplevel)
 REPO_URL=""
 
@@ -86,11 +86,12 @@ main() {
       INDEX_DIR=${TARGET_DIR}
   fi
 
-  locate
+  # locate
   download
-  dependencies
+  # dependencies
   if [[ "$LINTING" != "off" ]]; then
-    lint
+    # lint
+    echo
   fi
   package
   upload
@@ -138,10 +139,51 @@ package() {
       CHART_VERSION_CMD=" --version $CHART_VERSION"
   fi
 
-  helm package ${CHARTS[*]} --destination ${CHARTS_TMP_DIR} $APP_VERSION_CMD$CHART_VERSION_CMD
+  helm repo add meland-charts ${CHARTS_URL}
+  helm repo update
+
+  # helm package ${CHARTS[*]} --destination ${CHARTS_TMP_DIR} $APP_VERSION_CMD$CHART_VERSION_CMD
+  echo "CHARTS_DIR: ${CHARTS_DIR}"
+  echo "PWD: $(pwd)"
+  projects=$(find "./${CHARTS_DIR}" -maxdepth 2 -type d);
+  for project_path in $projects
+  do
+    last_dir=$(echo ${project_path} | xargs -I {} basename {})
+    if [[ ${last_dir} = "charts" && -d "${project_path}" ]];
+        then
+            charts=$(find "${project_path}" -maxdepth 1 -type d);
+            for chart_path in $charts
+            do
+                if [[ -d "${chart_path}" && -f "${chart_path}/Chart.yaml" ]];
+                then
+                    # 解析chart info 结构成关联数组，方便读取
+                    temp_chart_info_string=$(helm show chart ${chart_path} | sed 's/[[:space:]]//g')
+                    declare -A chartInfoMap
+                    chartInfoMap=()
+                    arr=(${temp_chart_info_string})
+                    for i in "${arr[@]}"; do
+                        key=`echo $i|awk -F':' '{print $1}'` 
+                        value=`echo $i|awk -F':' '{print $2}'`
+                        chartInfoMap+=([$key]="${value}")
+                    done
+                    if [[ $(helm search repo ${chartInfoMap["name"]} --version ${chartInfoMap["version"]} ) == 'No results found' ]]
+                    then
+                        helm package ${chart_path} -d ${CHARTS_TMP_DIR}
+                    else
+                        echo "Ignore existing versions ${chartInfoMap["name"]}:${chartInfoMap["version"]}"
+                    fi;
+                fi;
+            done
+        fi;
+  done
 }
 
 upload() {
+  if [ ! -d ${CHARTS_TMP_DIR} ]; then
+     echo "No chart packages to upload"
+     exit
+  fi
+
   tmpDir=$(mktemp -d)
   pushd $tmpDir >& /dev/null
 
@@ -152,6 +194,7 @@ upload() {
   git remote set-url origin ${REPO_URL}
   git checkout ${BRANCH}
 
+  echo "CHARTS_TMP_DIR: ${CHARTS_TMP_DIR}"
   charts=$(cd ${CHARTS_TMP_DIR} && ls *.tgz | xargs)
 
   mkdir -p ${TARGET_DIR}

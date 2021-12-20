@@ -14,5 +14,5 @@ jobs:
       - name: Publish helm chart
         uses: ./
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.BOT_GITHUB_TOKEN }}
           charts_dir: testdata
