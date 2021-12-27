@@ -140,7 +140,7 @@ package() {
       CHART_VERSION_CMD=" --version $CHART_VERSION"
   fi
 
-  charts_url=echo ${CHARTS_URL} | sed 's/\/*$//g')
+  charts_url=$(echo ${CHARTS_URL} | sed 's/\/*$//g')
   echo "chart URL: ${charts_url}"
   if [[ $(curl -sIL -w "%{http_code}" --retry 2 -o /dev/null ${charts_url}/index.yaml -eq 200 ]]
   then
