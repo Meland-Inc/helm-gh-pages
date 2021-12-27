@@ -175,7 +175,7 @@ package() {
                           echo "Ignore existing versions ${chartInfoMap["name"]}:${chartInfoMap["version"]}"
                           contiune
                         then
-                        fi;
+                        fi
                     fi;
                     helm package ${chart_path} -d ${CHARTS_TMP_DIR}
 
