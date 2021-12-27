@@ -145,7 +145,7 @@ package() {
     helm repo update
   fi
 
-  chmod -R 777 ${CHARTS_TMP_DIR}
+
   # helm package ${CHARTS[*]} --destination ${CHARTS_TMP_DIR} $APP_VERSION_CMD$CHART_VERSION_CMD
   echo "CHARTS_DIR: ${CHARTS_DIR}"
   echo "PWD: $(pwd)"
@@ -196,7 +196,7 @@ upload() {
      echo "No chart packages to upload"
      exit
   fi
-
+  chmod -R 777 ${CHARTS_TMP_DIR}
   tmpDir=$(mktemp -d)
   pushd $tmpDir >& /dev/null
 
