@@ -169,16 +169,15 @@ package() {
                         value=`echo $i|awk -F':' '{print $2}'`
                         chartInfoMap+=([$key]="${value}")
                     done
+
                     if [[ -f ${INDEX_DIR}/index.yaml ]];
                     then
-                        if [[ $(helm search repo ${chartInfoMap["name"]} --version ${chartInfoMap["version"]} ) != 'No results found' ]];
-                          echo "Ignore existing versions ${chartInfoMap["name"]}:${chartInfoMap["version"]}"
-                          contiune
-                        then
-                        fi
-                    fi
+                      if [[ $(helm search repo ${chartInfoMap["name"]} --version ${chartInfoMap["version"]} ) != 'No results found' ]];
+                      then
+                        echo "Ignore existing versions ${chartInfoMap["name"]}:${chartInfoMap["version"]}"
+                      fi;
+                    fi;
                     helm package ${chart_path} -d ${CHARTS_TMP_DIR}
-
                     # if [[ $(helm search repo ${chartInfoMap["name"]} --version ${chartInfoMap["version"]} ) == 'No results found' ]]
                     # then
                     #     helm package ${chart_path} -d ${CHARTS_TMP_DIR}
@@ -192,6 +191,7 @@ package() {
 }
 
 upload() {
+  exit
   if [ ! -d ${CHARTS_TMP_DIR} ]; then
      echo "No chart packages to upload"
      exit
