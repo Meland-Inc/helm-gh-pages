@@ -139,8 +139,11 @@ package() {
       CHART_VERSION_CMD=" --version $CHART_VERSION"
   fi
 
-  helm repo add meland-charts ${CHARTS_URL} --force-update
-  helm repo update
+  if [[ -f ${INDEX_DIR}/index.yaml ]]
+  then
+    helm repo add meland-charts ${CHARTS_URL} --force-update
+    helm repo update
+  fi;
 
   # helm package ${CHARTS[*]} --destination ${CHARTS_TMP_DIR} $APP_VERSION_CMD$CHART_VERSION_CMD
   echo "CHARTS_DIR: ${CHARTS_DIR}"
@@ -166,12 +169,22 @@ package() {
                         value=`echo $i|awk -F':' '{print $2}'`
                         chartInfoMap+=([$key]="${value}")
                     done
-                    if [[ $(helm search repo ${chartInfoMap["name"]} --version ${chartInfoMap["version"]} ) == 'No results found' ]]
+                    if [[ -f ${INDEX_DIR}/index.yaml ]]
                     then
-                        helm package ${chart_path} -d ${CHARTS_TMP_DIR}
-                    else
-                        echo "Ignore existing versions ${chartInfoMap["name"]}:${chartInfoMap["version"]}"
+                        if [[ $(helm search repo ${chartInfoMap["name"]} --version ${chartInfoMap["version"]} ) != 'No results found' ]]
+                          echo "Ignore existing versions ${chartInfoMap["name"]}:${chartInfoMap["version"]}"
+                          contiune
+                        then
+                        fi;
                     fi;
+                    helm package ${chart_path} -d ${CHARTS_TMP_DIR}
+
+                    # if [[ $(helm search repo ${chartInfoMap["name"]} --version ${chartInfoMap["version"]} ) == 'No results found' ]]
+                    # then
+                    #     helm package ${chart_path} -d ${CHARTS_TMP_DIR}
+                    # else
+                    #     echo "Ignore existing versions ${chartInfoMap["name"]}:${chartInfoMap["version"]}"
+                    # fi;
                 fi;
             done
         fi;
