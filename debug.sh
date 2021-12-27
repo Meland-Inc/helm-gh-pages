@@ -8,3 +8,6 @@ if [[ $(curl -sIL -w "%{http_code}" --retry 2 -o /dev/null https://meland-inc.gi
             echo "44444"
     fi;
 
+
+acb=/home.abc.com
+echo ${acb%%//*}/index.yaml
