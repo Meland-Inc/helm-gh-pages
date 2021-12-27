@@ -143,7 +143,7 @@ package() {
   then
     helm repo add meland-charts ${CHARTS_URL} --force-update
     helm repo update
-  fi;
+  fi
 
   # helm package ${CHARTS[*]} --destination ${CHARTS_TMP_DIR} $APP_VERSION_CMD$CHART_VERSION_CMD
   echo "CHARTS_DIR: ${CHARTS_DIR}"
