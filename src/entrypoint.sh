@@ -36,6 +36,7 @@ CHARTS_TMP_DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )/.char
 
 REPO_ROOT=$(git rev-parse --show-toplevel)
 REPO_URL=""
+INDEX_FILE_EXIST=0
 
 main() {
   if [[ -z "$HELM_VERSION" ]]; then
@@ -139,8 +140,9 @@ package() {
       CHART_VERSION_CMD=" --version $CHART_VERSION"
   fi
 
-  if [[ -f ${INDEX_DIR}/index.yaml ]]
+  if [[ $(curl -sIL -w "%{http_code}" --retry 2 -o /dev/null https://meland-inc.github.io/charts/index.yaml) -eq 200 ]]
   then
+    INDEX_FILE_EXIST=1
     helm repo add meland-charts ${CHARTS_URL} --force-update
     helm repo update
   fi
@@ -171,7 +173,7 @@ package() {
                         chartInfoMap+=([$key]="${value}")
                     done
 
-                    if [[ -f ${INDEX_DIR}/index.yaml ]];
+                    if [[ ${INDEX_FILE_EXIST} -eq 1 ]];
                     then
                       if [[ $(helm search repo ${chartInfoMap["name"]} --version ${chartInfoMap["version"]} ) != 'No results found' ]];
                       then
