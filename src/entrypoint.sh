@@ -176,7 +176,7 @@ package() {
                           contiune
                         then
                         fi
-                    fi;
+                    fi
                     helm package ${chart_path} -d ${CHARTS_TMP_DIR}
 
                     # if [[ $(helm search repo ${chartInfoMap["name"]} --version ${chartInfoMap["version"]} ) == 'No results found' ]]
