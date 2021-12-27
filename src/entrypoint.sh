@@ -140,7 +140,7 @@ package() {
       CHART_VERSION_CMD=" --version $CHART_VERSION"
   fi
 
-  if [[ $(curl -sIL -w "%{http_code}" --retry 2 -o /dev/null ${CHARTS_URL}/index.yaml) -eq 200 ]]
+  if [[ $(curl -sIL -w "%{http_code}" --retry 2 -o /dev/null ${CHARTS_URL}index.yaml) -eq 200 ]]
   then
     INDEX_FILE_EXIST=1
     helm repo add meland-charts ${CHARTS_URL} --force-update
