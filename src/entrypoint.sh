@@ -191,7 +191,6 @@ package() {
 }
 
 upload() {
-  exit
   if [ ! -d ${CHARTS_TMP_DIR} ]; then
      echo "No chart packages to upload"
      exit
