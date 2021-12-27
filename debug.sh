@@ -13,4 +13,6 @@ acb=https://meland-inc.github.io/services-charts/////
 
 echo ${acb} | sed 's/\/*$//g'
 
-$(echo ${abc} | sed 's/\/*$//g')
+
+charts_index_url=$(echo https://meland-inc.github.io/services-charts///// | sed 's/\/*$//g')
+echo $charts_index_url
