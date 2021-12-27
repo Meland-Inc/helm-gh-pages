@@ -139,7 +139,7 @@ package() {
       CHART_VERSION_CMD=" --version $CHART_VERSION"
   fi
 
-  helm repo add meland-charts ${CHARTS_URL}
+  helm repo add meland-charts ${CHARTS_URL} --force-update
   helm repo update
 
   # helm package ${CHARTS[*]} --destination ${CHARTS_TMP_DIR} $APP_VERSION_CMD$CHART_VERSION_CMD
