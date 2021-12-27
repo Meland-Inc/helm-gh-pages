@@ -178,6 +178,7 @@ package() {
                       if [[ $(helm search repo ${chartInfoMap["name"]} --version ${chartInfoMap["version"]} ) != 'No results found' ]];
                       then
                         echo "Ignore existing versions ${chartInfoMap["name"]}:${chartInfoMap["version"]}"
+                        continue
                       fi;
                     fi;
                     helm package ${chart_path} -d ${CHARTS_TMP_DIR}
