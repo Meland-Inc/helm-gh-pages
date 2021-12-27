@@ -169,9 +169,9 @@ package() {
                         value=`echo $i|awk -F':' '{print $2}'`
                         chartInfoMap+=([$key]="${value}")
                     done
-                    if [[ -f ${INDEX_DIR}/index.yaml ]]
+                    if [[ -f ${INDEX_DIR}/index.yaml ]];
                     then
-                        if [[ $(helm search repo ${chartInfoMap["name"]} --version ${chartInfoMap["version"]} ) != 'No results found' ]]
+                        if [[ $(helm search repo ${chartInfoMap["name"]} --version ${chartInfoMap["version"]} ) != 'No results found' ]];
                           echo "Ignore existing versions ${chartInfoMap["name"]}:${chartInfoMap["version"]}"
                           contiune
                         then
