@@ -17,8 +17,9 @@
 # charts_index_url=$(echo https://meland-inc.github.io/services-charts | sed 's/\/*$//g')
 # echo $charts_index_url
 
-
-  if [[ $(curl -sIL -w "%{http_code}" --retry 2 -o /dev/null https://meland-inc.github.io/bian-charts/index.yaml ) -eq 200 ]];
+   chart_url=https://meland-inc.github.io/bian-charts
+   curl -sIL -w "%{http_code}" --retry 2 -o /dev/null ${chart_url}/index.yaml
+  if [[ $(curl -sIL -w "%{http_code}" --retry 2 -o /dev/null ${chart_url}/index.yaml ) -eq 200 ]];
   then
     INDEX_FILE_EXIST=1
     helm repo add meland-charts ${CHARTS_URL} --force-update
