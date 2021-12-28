@@ -144,6 +144,7 @@ package() {
   echo "chart URL: ${charts_url}"
   if [[ $(curl -sIL -w "%{http_code}" --retry 2 -o /dev/null ${charts_url}/index.yaml -eq 200) ]];
   then
+    echo "update repo"
     INDEX_FILE_EXIST=1
     helm repo add meland-charts ${CHARTS_URL} --force-update
     helm repo update
