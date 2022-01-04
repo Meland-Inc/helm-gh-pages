@@ -184,7 +184,7 @@ package() {
                         continue
                       fi;
                     fi;
-                    if [[ ${HELM_VERSION} -eq  '' ]]
+                    if [[ ${HELM_VERSION} -eq  '' ]];
                     then
                       helm package ${chart_path} -d ${CHARTS_TMP_DIR}
                     else
