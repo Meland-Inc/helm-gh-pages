@@ -26,7 +26,8 @@
   #   helm repo update
   # fi
   abc=true
-  if [[ ${abc} -eq true ]]; then
+  if [ ${abc} = true ] && [ ${abc} = true ];
+  then
     echo "1"
   else
     echo "0"
