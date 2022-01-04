@@ -88,6 +88,10 @@ main() {
       INDEX_DIR=${TARGET_DIR}
   fi
 
+  if [[ -z "$FORCED_COVER" ]]; then
+      FORCED_COVER=false
+  fi
+
   # locate
   download
   # dependencies
@@ -176,7 +180,7 @@ package() {
                         chartInfoMap+=([$key]="${value}")
                     done
 
-                    if [ ${INDEX_FILE_EXIST} -eq 1 ] && ([ ! -z ${FORCED_COVER} ] && [ ${FORCED_COVER} != true ]);
+                    if [ ${INDEX_FILE_EXIST} -eq 1 ] && [ ${FORCED_COVER} != true ];
                     then
                       if [[ $(helm search repo ${chartInfoMap["name"]} --version ${chartInfoMap["version"]} ) != 'No results found' ]];
                       then

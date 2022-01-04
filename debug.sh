@@ -26,7 +26,7 @@
   #   helm repo update
   # fi
   abc=''
-  if ([ ! -z ${abc} ]);
+  if ([ ! -z ${abc} ] && [ $abc != true ] );
   then
     echo "1"
   else
