@@ -184,12 +184,7 @@ package() {
                         continue
                       fi;
                     fi;
-                    if [[ ${HELM_VERSION} -eq  '' ]];
-                    then
-                      helm package ${chart_path} -d ${CHARTS_TMP_DIR}
-                    else
-                      helm package ${chart_path} -d ${CHARTS_TMP_DIR} --version ${HELM_VERSION}
-                    fi;
+                    helm package ${chart_path} -d ${CHARTS_TMP_DIR} ${CHART_VERSION_CMD}
                     # if [[ $(helm search repo ${chartInfoMap["name"]} --version ${chartInfoMap["version"]} ) == 'No results found' ]]
                     # then
                     #     helm package ${chart_path} -d ${CHARTS_TMP_DIR}
