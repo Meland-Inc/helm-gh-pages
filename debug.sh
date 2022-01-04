@@ -25,9 +25,9 @@
   #   helm repo add meland-charts ${CHARTS_URL} --force-update
   #   helm repo update
   # fi
-                  if [[ ${HELM_VERSION} -eq  '' ]]
-                  then
-                      helm package ${chart_path} -d ${CHARTS_TMP_DIR}
-                    else
-                      helm package ${chart_path} -d ${CHARTS_TMP_DIR} --version ${HELM_VERSION}
-                  if;
+  abc=true
+  if [[ ${abc} -eq true ]]; then
+    echo "1"
+  else
+    echo "0"
+  fi;
