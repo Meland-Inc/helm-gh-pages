@@ -31,6 +31,7 @@ COMMIT_EMAIL=${11}
 APP_VERSION=${12}
 CHART_VERSION=${13}
 INDEX_DIR=${14}
+FORCED_COVER=${15}
 CHARTS=()
 CHARTS_TMP_DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )/.chartsp"
 
@@ -175,7 +176,7 @@ package() {
                         chartInfoMap+=([$key]="${value}")
                     done
 
-                    if [[ ${INDEX_FILE_EXIST} -eq 1 ]];
+                    if [ ${INDEX_FILE_EXIST} -eq 1 ] && [ ${FORCED_COVER} -eq 0 ]
                     then
                       if [[ $(helm search repo ${chartInfoMap["name"]} --version ${chartInfoMap["version"]} ) != 'No results found' ]];
                       then
@@ -183,7 +184,12 @@ package() {
                         continue
                       fi;
                     fi;
-                    helm package ${chart_path} -d ${CHARTS_TMP_DIR}
+                    if [[ ${HELM_VERSION} -eq  '' ]]
+                    then
+                      helm package ${chart_path} -d ${CHARTS_TMP_DIR}
+                    else
+                      helm package ${chart_path} -d ${CHARTS_TMP_DIR} --version ${HELM_VERSION}
+                    if;
                     # if [[ $(helm search repo ${chartInfoMap["name"]} --version ${chartInfoMap["version"]} ) == 'No results found' ]]
                     # then
                     #     helm package ${chart_path} -d ${CHARTS_TMP_DIR}
