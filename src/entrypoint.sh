@@ -176,7 +176,7 @@ package() {
                         chartInfoMap+=([$key]="${value}")
                     done
 
-                    if [ ${INDEX_FILE_EXIST} -eq 1 ] && [ ${FORCED_COVER} = true ];
+                    if [ ${INDEX_FILE_EXIST} -eq 1 ] && [ ${FORCED_COVER} != true ];
                     then
                       if [[ $(helm search repo ${chartInfoMap["name"]} --version ${chartInfoMap["version"]} ) != 'No results found' ]];
                       then
