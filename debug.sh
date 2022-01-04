@@ -25,8 +25,8 @@
   #   helm repo add meland-charts ${CHARTS_URL} --force-update
   #   helm repo update
   # fi
-  abc=true
-  if [ ${abc} = true ] && [ ${abc} = true ];
+  abc=''
+  if ([ ! -z ${abc} ]);
   then
     echo "1"
   else
