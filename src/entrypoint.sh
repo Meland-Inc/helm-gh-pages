@@ -185,7 +185,12 @@ package() {
 
                     if [ ${INDEX_FILE_EXIST} -eq 1 ] && [ ${FORCED_COVER} != true ];
                     then
-                      if [[ $(helm search repo ${chartInfoMap["name"]} --version ${chartInfoMap["version"]} ) != 'No results found' ]];
+                      local chart_version_command="--version ${chartInfoMap["version"]}"
+                      
+                      if [[ ! -z "$CHART_VERSION_CMD" ]]; then
+                          chart_version_command=" --version $CHART_VERSION"
+                      fi;
+                      if [[ $(helm search repo ${chartInfoMap["name"]} ${chart_version_command} ) != 'No results found' ]];
                       then
                         echo "Ignore existing versions ${chartInfoMap["name"]}:${chartInfoMap["version"]}"
                         continue
