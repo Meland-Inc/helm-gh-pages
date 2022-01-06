@@ -32,3 +32,10 @@
   else
     echo "0"
   fi;
+
+  CHART_VERSION=
+  if [[ ! -z "$CHART_VERSION" ]]; then
+    CHART_VERSION_CMD=" --version $CHART_VERSION"
+  fi
+
+  echo ${CHART_VERSION_CMD}
