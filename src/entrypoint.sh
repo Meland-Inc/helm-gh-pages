@@ -145,9 +145,6 @@ package() {
       CHART_VERSION_CMD=" --version $CHART_VERSION"
   fi
 
-  echo "debug debug:::"${CHART_VERSION}
-  echo "debug1 debug1:::"${CHART_VERSION_CMD}
-
   charts_url=$(echo ${CHARTS_URL} | sed 's/\/*$//g')
   if [[ $(curl -sIL -w "%{http_code}" --retry 2 -o /dev/null ${charts_url}/index.yaml) -eq 200 ]];
   then
@@ -186,7 +183,6 @@ package() {
                     if [ ${INDEX_FILE_EXIST} -eq 1 ] && [ ${FORCED_COVER} != true ];
                     then
                       local chart_version_command="--version ${chartInfoMap["version"]}"
-                      
                       if [[ ! -z "$CHART_VERSION_CMD" ]]; then
                           chart_version_command=" --version $CHART_VERSION"
                       fi;
