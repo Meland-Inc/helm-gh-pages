@@ -1,3 +1,5 @@
+set -o errexit
+set -o pipefail
 # if [[ $(curl -sIL -w "%{http_code}" --retry 2 -o /dev/null https://meland-inc.github.io/bian-charts/index.yaml ) -eq 200 ]]
 #     then
 #         #  echo "bbbb:"${exec_code}
@@ -25,17 +27,17 @@
   #   helm repo add meland-charts ${CHARTS_URL} --force-update
   #   helm repo update
   # fi
-  abc=''
-  if ([ ! -z ${abc} ] && [ $abc != true ] );
-  then
-    echo "1"
-  else
-    echo "0"
-  fi;
+  # abc=''
+  # if ([ ! -z ${abc} ] && [ $abc != true ] );
+  # then
+  #   echo "1"
+  # else
+  #   echo "0"
+  # fi;
 
-  CHART_VERSION=
-  if [[ ! -z "$CHART_VERSION" ]]; then
-    CHART_VERSION_CMD=" --version $CHART_VERSION"
-  fi
+  # CHART_VERSION=
+  # if [[ ! -z "$CHART_VERSION" ]]; then
+  #   CHART_VERSION_CMD=" --version $CHART_VERSION"
+  # fi
 
-  echo ${CHART_VERSION_CMD}
+  # echo ${CHART_VERSION_CMD}

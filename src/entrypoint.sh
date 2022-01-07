@@ -242,6 +242,17 @@ upload() {
 
   git commit -m "Publish $charts"
   git push origin ${BRANCH}
+  for((i=1;i<=10;i++)); 
+  do
+  if $(git push)
+  then
+    echo "git push succeeded"
+    break
+  else
+    echo "git push failed"
+    git fetch && git rebase
+  fi
+  done
 
   popd >& /dev/null
   rm -rf $tmpDir
