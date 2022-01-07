@@ -241,10 +241,9 @@ upload() {
   git add ${INDEX_DIR}/index.yaml
 
   git commit -m "Publish $charts"
-  git push origin ${BRANCH}
   for((i=1;i<=10;i++)); 
   do
-  if $(git push)
+  if $(git push origin ${BRANCH})
   then
     echo "git push succeeded"
     break
