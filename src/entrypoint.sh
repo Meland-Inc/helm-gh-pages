@@ -215,8 +215,6 @@ upload() {
   pushd $tmpDir >& /dev/null
 
   git clone ${REPO_URL}
-  echo "show ${REPO_URL}"
-  ls
   cd ${REPOSITORY}
   git config user.name "${COMMIT_USERNAME}"
   git config user.email "${COMMIT_EMAIL}"
