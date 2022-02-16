@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# set -o errexit
+set -o errexit
 set -o pipefail
 
 GITHUB_TOKEN=$1
